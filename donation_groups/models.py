@@ -10,5 +10,13 @@ class DonationGroup(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    def __unicode__(self): #Python 3.3 is __str__
+    def __unicode__(self):
+        return self.title
+
+
+class Newsfeed(models.Model):
+    title = models.CharField(max_length=255, blank=False)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
         return self.title

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DonationGroup
+from .models import DonationGroup, Newsfeed
 
 
 class DonationGroupAdmin(admin.ModelAdmin):
@@ -14,4 +14,14 @@ class DonationGroupAdmin(admin.ModelAdmin):
     ]
 
 
+class NewsfeedAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': [
+            'title',
+            'description',
+        ]}),
+    ]
+
+
 admin.site.register(DonationGroup, DonationGroupAdmin)
+admin.site.register(Newsfeed, NewsfeedAdmin)
