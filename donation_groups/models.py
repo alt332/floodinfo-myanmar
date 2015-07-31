@@ -3,7 +3,6 @@ from django.db import models
 
 class DonationGroup(models.Model):
     title = models.CharField(max_length=255, blank=False)
-    email = models.EmailField()
     description = models.TextField(blank=True)
     facebook_url = models.CharField(max_length=255, blank=True)
     donation_location = models.TextField(blank=True)
@@ -11,7 +10,7 @@ class DonationGroup(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __unicode__(self): #Python 3.3 is __str__
-        return self.email
+        return self.title
 
 
 class PhoneNumber(models.Model):
