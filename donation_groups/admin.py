@@ -17,7 +17,6 @@ class DonationGroupAdmin(admin.ModelAdmin):
             'donation_location',
         ]}),
     ]
-    # inlines = [PhoneNumberInline]
 
 
 admin.site.register(DonationGroup, DonationGroupAdmin)

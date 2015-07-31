@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from .models import DonationGroup, PhoneNumber
+from .models import DonationGroup
 from .serializers import DonationGroupSerializer
 
 
