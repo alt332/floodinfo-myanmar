@@ -12,9 +12,3 @@ class DonationGroup(models.Model):
 
     def __unicode__(self): #Python 3.3 is __str__
         return self.title
-
-
-# class PhoneNumber(models.Model):
-#     donation_group = models.ForeignKey(DonationGroup, related_name='phone_numbers')
-#     name = models.CharField(max_length=255, blank=True)
-#     phone = models.CharField(max_length=255, blank=False)

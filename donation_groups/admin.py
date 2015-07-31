@@ -2,11 +2,6 @@ from django.contrib import admin
 from .models import DonationGroup
 
 
-# class PhoneNumberInline(admin.StackedInline):
-#     model = PhoneNumber
-#     extra = 1
-
-
 class DonationGroupAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': [
