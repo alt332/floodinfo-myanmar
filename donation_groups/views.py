@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, FormParser
 from .models import DonationGroup, Newsfeed
 from .serializers import DonationGroupSerializer, NewsfeedSerializer
 
@@ -13,41 +14,64 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
+@csrf_exempt
 def donation_group_list(request):
-    donation_groups = DonationGroup.objects.all()
+    if request.method == 'GET':
+        donation_groups = DonationGroup.objects.all()
 
-    paginator = Paginator(donation_groups, 20)
-    page = request.GET.get('page')
+        paginator = Paginator(donation_groups, 10)
+        page = request.GET.get('page')
 
-    if page is not None:
-        try:
-            donation_groups = paginator.page(page)
-        except:
+        if page is not None:
+            try:
+                donation_groups = paginator.page(page)
+            except:
+                return HttpResponse(status=204)
+
+        serializer = DonationGroupSerializer(donation_groups, many=True)
+
+        if donation_groups:
+            return JSONResponse(serializer.data)
+        else:
             return HttpResponse(status=204)
 
-    serializer = DonationGroupSerializer(donation_groups, many=True)
 
-    if donation_groups:
-        return JSONResponse(serializer.data)
-    else:
-        return HttpResponse(status=204)
+    elif request.method == 'POST':
+        data = FormParser().parse(request)
+        serializer = DonationGroupSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
 
-
+@csrf_exempt
 def newsfeed_list(request):
-    newsfeeds = Newsfeed.objects.all()
+    if request.method == 'GET':
+        newsfeeds = Newsfeed.objects.all()
 
-    paginator = Paginator(newsfeeds, 10)
-    page = request.GET.get('page')
+        paginator = Paginator(newsfeeds, 10)
+        page = request.GET.get('page')
 
-    if page is not None:
-        try:
-            newsfeeds = paginator.page(page)
-        except:
+        if page is not None:
+            try:
+                newsfeeds = paginator.page(page)
+            except:
+                return HttpResponse(status=204)
+
+        serializer = NewsfeedSerializer(newsfeeds, many=True)
+
+        if newsfeeds:
+            return JSONResponse(serializer.data)
+        else:
             return HttpResponse(status=204)
 
-    serializer = NewsfeedSerializer(newsfeeds, many=True)
 
-    if newsfeeds:
-        return JSONResponse(serializer.data)
-    else:
-        return HttpResponse(status=204)
+    elif request.method == 'POST':
+        data = FormParser().parse(request)
+        serializer = NewsfeedSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
+
+    

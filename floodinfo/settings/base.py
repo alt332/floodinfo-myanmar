@@ -7,6 +7,8 @@ SECRET_KEY = 'v6s=$i3tycp1x*hyz(ck)b798vk=qgp+02tax63rq*nkds8_5n'
 
 DEBUG = True
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 INSTALLED_APPS = (
     'bootstrap3',
     'django_admin_bootstrapped',
@@ -90,3 +92,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'),
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.FormParser',
+    )
+}
+
