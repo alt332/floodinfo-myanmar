@@ -7,8 +7,6 @@ SECRET_KEY = 'v6s=$i3tycp1x*hyz(ck)b798vk=qgp+02tax63rq*nkds8_5n'
 
 DEBUG = True
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 INSTALLED_APPS = (
     'bootstrap3',
     'django_admin_bootstrapped',
@@ -20,10 +18,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'donation_groups',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,3 +99,4 @@ REST_FRAMEWORK = {
     )
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
