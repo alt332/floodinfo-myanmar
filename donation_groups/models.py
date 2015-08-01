@@ -16,7 +16,9 @@ class DonationGroup(models.Model):
 
 class Newsfeed(models.Model):
     title = models.CharField(max_length=255, blank=False)
+    show_hide = models.BooleanField(default=False, verbose_name="Hide")
     description = models.TextField(blank=True)
+    spam_report_count = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.title

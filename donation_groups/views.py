@@ -47,7 +47,7 @@ def donation_group_list(request):
 @csrf_exempt
 def newsfeed_list(request):
     if request.method == 'GET':
-        newsfeeds = Newsfeed.objects.order_by('-id').all()
+        newsfeeds = Newsfeed.objects.values('id', 'title', 'description').exclude(show_hide=True).order_by('-id').all()
 
         paginator = Paginator(newsfeeds, 10)
         page = request.GET.get('page')
@@ -74,4 +74,13 @@ def newsfeed_list(request):
             return JSONResponse(serializer.data, status=201)
         return JSONResponse(serializer.errors, status=400)
 
-    
+def newsfeed_report(request, pk):
+    try:
+        newsfeed = Newsfeed.objects.get(pk=pk)
+    except:
+        return HttpRespose(stauts=404)
+
+    newsfeed.spam_report_count += 1
+    newsfeed.save()
+
+    return JSONResponse({ 'message': 'Successfully Reported.' },status=200)

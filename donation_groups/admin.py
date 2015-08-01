@@ -15,8 +15,11 @@ class DonationGroupAdmin(admin.ModelAdmin):
 
 
 class NewsfeedAdmin(admin.ModelAdmin):
+    readonly_fields = ('spam_report_count',)
     fieldsets = [
         (None, {'fields': [
+            'show_hide',
+            'spam_report_count',
             'title',
             'description',
         ]}),
