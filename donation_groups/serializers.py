@@ -10,7 +10,6 @@ class DonationGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DonationGroup
-        ordering = ['title']
 
 
 class NewsfeedSerializer(serializers.ModelSerializer):
@@ -20,4 +19,3 @@ class NewsfeedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Newsfeed
-        ordering = ['title']
