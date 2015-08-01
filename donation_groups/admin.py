@@ -23,6 +23,8 @@ class NewsfeedAdmin(admin.ModelAdmin):
             'spam_report_count',
             'title',
             'description',
+            'dam_condition',
+            'river_condition',
         ]}),
     ]
 
