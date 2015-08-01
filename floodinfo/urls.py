@@ -21,6 +21,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^api/donation_groups$', views.donation_group_list),
     url(r'^api/newsfeeds$', views.newsfeed_list),
-    url(r'^api/newsfeeds/(?P<pk>[0-9]+)/report_as_spam/$', views.newsfeed_report),
+    url(r'^api/newsfeeds/(?P<pk>[0-9]+)/report_as_spam$', views.newsfeed_report),
     url(r'^admin/', include(admin.site.urls)),
 ]
