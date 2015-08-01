@@ -17,7 +17,7 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def donation_group_list(request):
     if request.method == 'GET':
-        donation_groups = DonationGroup.objects.order_by('title').all()
+        donation_groups = DonationGroup.objects.order_by('-id').all()
 
         paginator = Paginator(donation_groups, 10)
         page = request.GET.get('page')
