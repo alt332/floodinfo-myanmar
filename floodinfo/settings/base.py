@@ -1,5 +1,6 @@
-import os
 from django.contrib import messages
+import os
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,15 +57,9 @@ WSGI_APPLICATION = 'floodinfo.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'floodinfo',
-        'USER': 'thiha',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default='postgres://localhost:5432/floodinfo')
 }
+
 
 
 # Internationalization
