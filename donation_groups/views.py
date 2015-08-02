@@ -47,7 +47,7 @@ def donation_group_list(request):
 @csrf_exempt
 def newsfeed_list(request):
     if request.method == 'GET':
-        newsfeeds = Newsfeed.objects.values('id', 'title', 'description').exclude(show_hide=True).order_by('-id').all()
+        newsfeeds = Newsfeed.objects.values('id', 'title', 'description', 'posted_time').exclude(show_hide=True).order_by('-id').all()
 
         paginator = Paginator(newsfeeds, 10)
         page = request.GET.get('page')
