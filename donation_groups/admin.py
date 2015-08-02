@@ -25,6 +25,7 @@ class NewsfeedAdmin(admin.ModelAdmin):
             'description',
             'dam_condition',
             'river_condition',
+            'posted_time'
         ]}),
     ]
 
