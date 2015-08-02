@@ -3,7 +3,8 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FormParser
-from .models import DonationGroup, Newsfeed
+from .models import DonationGroup
+from newsfeed.models import Newsfeed
 from .serializers import DonationGroupSerializer, NewsfeedSerializer
 
 

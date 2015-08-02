@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DonationGroup, Newsfeed
+from .models import DonationGroup
 
 
 class DonationGroupAdmin(admin.ModelAdmin):
@@ -13,22 +13,4 @@ class DonationGroupAdmin(admin.ModelAdmin):
         ]}),
     ]
 
-
-class NewsfeedAdmin(admin.ModelAdmin):
-    list_display = ('title', 'spam_report_count', 'posted_time')
-    readonly_fields = ('spam_report_count',)
-    fieldsets = [
-        (None, {'fields': [
-            'show_hide',
-            'spam_report_count',
-            'title',
-            'description',
-            'dam_condition',
-            'river_condition',
-            'posted_time'
-        ]}),
-    ]
-
-
 admin.site.register(DonationGroup, DonationGroupAdmin)
-admin.site.register(Newsfeed, NewsfeedAdmin)

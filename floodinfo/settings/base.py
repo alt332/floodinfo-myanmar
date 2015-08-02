@@ -19,6 +19,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'donation_groups',
     'corsheaders',
+    'newsfeed'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,6 +1,7 @@
 from django.forms import widgets
 from rest_framework import serializers
-from .models import DonationGroup, Newsfeed
+from .models import DonationGroup
+from newsfeed.models import Newsfeed
 
 
 class DonationGroupSerializer(serializers.ModelSerializer):
