@@ -15,7 +15,7 @@ class DonationGroupAdmin(admin.ModelAdmin):
 
 
 class NewsfeedAdmin(admin.ModelAdmin):
-    list_display = ('title', 'spam_report_count')
+    list_display = ('title', 'spam_report_count', 'posted_time')
     readonly_fields = ('spam_report_count',)
     fieldsets = [
         (None, {'fields': [
