@@ -18,9 +18,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'donation_groups',
+    'csvimport.app.CSVImportConf',
     'corsheaders',
-    'newsfeed'
+    'donation_groups',
+    'newsfeed',
+    'location',
 )
 
 MIDDLEWARE_CLASSES = (
