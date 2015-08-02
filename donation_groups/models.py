@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 
 
@@ -28,6 +29,7 @@ class Newsfeed(models.Model):
     spam_report_count = models.IntegerField(default=0)
     dam_condition = models.IntegerField(default=0, choices=condition_choices)
     river_condition = models.IntegerField(default=0, choices=condition_choices)
+    posted_time = models.DateTimeField(default=timezone.now, blank=True)
 
     def __unicode__(self):
         return self.title
