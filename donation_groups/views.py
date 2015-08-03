@@ -4,8 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FormParser
 from .models import DonationGroup
-from newsfeed.models import Newsfeed
-from .serializers import DonationGroupSerializer, NewsfeedSerializer
+from .serializers import DonationGroupSerializer
 
 
 class JSONResponse(HttpResponse):
@@ -16,7 +15,7 @@ class JSONResponse(HttpResponse):
 
 
 @csrf_exempt
-def donation_group_list(request):
+def donation_group_list(request, version):
     if request.method == 'GET':
         donation_groups = DonationGroup.objects.order_by('-id').all()
 
@@ -32,7 +31,17 @@ def donation_group_list(request):
         serializer = DonationGroupSerializer(donation_groups, many=True)
 
         if donation_groups:
-            return JSONResponse(serializer.data)
+            if version == 'v2':
+                return JSONResponse({
+                    'meta': {
+                        'total_count': paginator.count,
+                        'page_count': paginator.num_pages,
+                        'current_page': page if page else 1,
+                    },
+                    'data': serializer.data
+                })
+            else:
+                return JSONResponse(serializer.data)
         else:
             return HttpResponse(status=204)
 
@@ -44,44 +53,3 @@ def donation_group_list(request):
             serializer.save()
             return JSONResponse(serializer.data, status=201)
         return JSONResponse(serializer.errors, status=400)
-
-@csrf_exempt
-def newsfeed_list(request):
-    if request.method == 'GET':
-        newsfeeds = Newsfeed.objects.values('id', 'title', 'description', 'posted_time').exclude(show_hide=True).order_by('-id').all()
-
-        paginator = Paginator(newsfeeds, 10)
-        page = request.GET.get('page')
-
-        if page is not None:
-            try:
-                newsfeeds = paginator.page(page)
-            except:
-                return HttpResponse(status=204)
-
-        serializer = NewsfeedSerializer(newsfeeds, many=True)
-
-        if newsfeeds:
-            return JSONResponse(serializer.data)
-        else:
-            return HttpResponse(status=204)
-
-
-    elif request.method == 'POST':
-        data = FormParser().parse(request)
-        serializer = NewsfeedSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data, status=201)
-        return JSONResponse(serializer.errors, status=400)
-
-def newsfeed_report(request, pk):
-    try:
-        newsfeed = Newsfeed.objects.get(pk=pk)
-    except:
-        return HttpRespose(stauts=404)
-
-    newsfeed.spam_report_count += 1
-    newsfeed.save()
-
-    return JSONResponse({ 'message': 'Successfully Reported.' },status=200)

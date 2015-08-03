@@ -94,7 +94,8 @@ STATICFILES_DIRS = (
 REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.FormParser',
-    )
+    ),
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLParameterVersioning',
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
