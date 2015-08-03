@@ -40,7 +40,7 @@ def donation_group_list(request, version=""):
                     'meta': {
                         'total_count': paginator.count,
                         'page_count': paginator.num_pages,
-                        'current_page': page
+                        'current_page': int(page)
                     },
                     'data': serializer.data
                 })
