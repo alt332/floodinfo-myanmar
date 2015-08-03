@@ -15,20 +15,12 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=255)),
-                ('email', models.EmailField(max_length=254)),
                 ('description', models.TextField()),
-                ('address', models.TextField()),
+                ('facebook_url', models.CharField(max_length=255, blank=True)),
+                ('phone_numbers', models.TextField(blank=True)),
+                ('donation_location', models.TextField(blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='PhoneNumber',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=255, blank=True)),
-                ('phone', models.CharField(max_length=255)),
-                ('donation_group', models.ForeignKey(to='donation_groups.DonationGroup')),
             ],
         ),
     ]
