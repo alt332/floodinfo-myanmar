@@ -12,7 +12,7 @@ class Newsfeed(models.Model):
 
     title = models.CharField(max_length=255, blank=False)
     show_hide = models.BooleanField(default=False, verbose_name='Hide')
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=False)
     spam_report_count = models.IntegerField(default=0)
     dam_condition = models.IntegerField(default=0, choices=condition_choices)
     river_condition = models.IntegerField(default=0, choices=condition_choices)
