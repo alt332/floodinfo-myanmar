@@ -17,10 +17,13 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def newsfeed_list(request, version=""):
     if request.method == 'GET':
-        newsfeeds = Newsfeed.objects.values('id', 'title', 'description', 'posted_time').exclude(show_hide=True).order_by('-id').all()
+        newsfeeds = Newsfeed.objects.values('id', 'title', 'description', 'posted_time').exclude(show_hide=True).order_by('-id')
 
         paginator = Paginator(newsfeeds, 10)
-        page = request.GET.get('page')
+        if request.GET.get('page'):
+            page = request.GET.get('page')
+        else:
+            page = 1
 
         if page is not None:
             try:
@@ -36,7 +39,7 @@ def newsfeed_list(request, version=""):
                     'meta': {
                         'total_count': paginator.count,
                         'page_count': paginator.num_pages,
-                        'current_page': page if page else 1,
+                        'current_page': page
                     },
                     'data': serializer.data
                 })

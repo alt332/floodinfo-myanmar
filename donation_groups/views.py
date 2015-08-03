@@ -17,10 +17,14 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def donation_group_list(request, version=""):
     if request.method == 'GET':
-        donation_groups = DonationGroup.objects.order_by('-id').all()
+        donation_groups = DonationGroup.objects.order_by('-id')
 
         paginator = Paginator(donation_groups, 10)
-        page = request.GET.get('page')
+
+        if request.GET.get('page'):
+            page = request.GET.get('page')
+        else:
+            page = 1
 
         if page is not None:
             try:
@@ -36,7 +40,7 @@ def donation_group_list(request, version=""):
                     'meta': {
                         'total_count': paginator.count,
                         'page_count': paginator.num_pages,
-                        'current_page': page if page else 1,
+                        'current_page': page
                     },
                     'data': serializer.data
                 })
