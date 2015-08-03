@@ -15,7 +15,7 @@ class JSONResponse(HttpResponse):
 
 
 @csrf_exempt
-def donation_group_list(request, version):
+def donation_group_list(request, version=""):
     if request.method == 'GET':
         donation_groups = DonationGroup.objects.order_by('-id').all()
 

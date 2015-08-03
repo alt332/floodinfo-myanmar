@@ -15,7 +15,7 @@ class JSONResponse(HttpResponse):
 
 
 @csrf_exempt
-def newsfeed_list(request, version):
+def newsfeed_list(request, version=""):
     if request.method == 'GET':
         newsfeeds = Newsfeed.objects.values('id', 'title', 'description', 'posted_time').exclude(show_hide=True).order_by('-id').all()
 
