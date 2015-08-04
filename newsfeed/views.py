@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FormParser
 from .models import Newsfeed
@@ -56,6 +57,7 @@ def newsfeed_list(request, version=""):
         return JSONResponse(serializer.errors, status=400)
 
 
+@csrf_exempt
 def newsfeed_report(request, pk):
     try:
         newsfeed = Newsfeed.objects.get(pk=pk)
@@ -66,3 +68,94 @@ def newsfeed_report(request, pk):
     newsfeed.save()
 
     return JSONResponse({ 'message': 'Successfully Reported.' },status=200)
+
+
+@csrf_exempt
+def filter_by_township(request, township):
+    newsfeeds = Newsfeed.objects.filter(township__icontains=township).exclude(show_hide=True).order_by('-id')
+
+    paginator = Paginator(newsfeeds, 10)
+    if request.GET.get('page'):
+        page = request.GET.get('page')
+    else:
+        page = 1
+
+    if page is not None:
+        try:
+            newsfeeds = paginator.page(page)
+        except:
+            return HttpResponse(status=204)
+
+    serializer = NewsfeedSerializer(newsfeeds, many=True)
+
+    if newsfeeds:
+        return JSONResponse({
+            'meta': {
+                'total_count': paginator.count,
+                'page_count': paginator.num_pages,
+                'current_page': int(page)
+            },
+            'data': serializer.data
+        })
+    else:
+        return HttpResponse(status=204)
+
+@csrf_exempt
+def filter_by_state(request, state):
+    newsfeeds = Newsfeed.objects.filter(state__icontains=state).exclude(show_hide=True).order_by('-id')
+
+    paginator = Paginator(newsfeeds, 10)
+    if request.GET.get('page'):
+        page = request.GET.get('page')
+    else:
+        page = 1
+
+    if page is not None:
+        try:
+            newsfeeds = paginator.page(page)
+        except:
+            return HttpResponse(status=204)
+
+    serializer = NewsfeedSerializer(newsfeeds, many=True)
+
+    if newsfeeds:
+        return JSONResponse({
+            'meta': {
+                'total_count': paginator.count,
+                'page_count': paginator.num_pages,
+                'current_page': int(page)
+            },
+            'data': serializer.data
+        })
+    else:
+        return HttpResponse(status=204)
+
+@csrf_exempt
+def search(request, query):
+    newsfeeds = Newsfeed.objects.filter(Q(state__icontains=query) | Q(township__icontains=query) | Q(title__contains=query) | Q(description__icontains=query)).exclude(show_hide=True).order_by('-id')
+
+    paginator = Paginator(newsfeeds, 10)
+    if request.GET.get('page'):
+        page = request.GET.get('page')
+    else:
+        page = 1
+
+    if page is not None:
+        try:
+            newsfeeds = paginator.page(page)
+        except:
+            return HttpResponse(status=204)
+
+    serializer = NewsfeedSerializer(newsfeeds, many=True)
+
+    if newsfeeds:
+        return JSONResponse({
+            'meta': {
+                'total_count': paginator.count,
+                'page_count': paginator.num_pages,
+                'current_page': int(page)
+            },
+            'data': serializer.data
+        })
+    else:
+        return HttpResponse(status=204)
