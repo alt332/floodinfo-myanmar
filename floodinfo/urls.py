@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from donation_groups import views as donation_group_views
 from newsfeed import views as newsfeed_views
+from location import views as location_views
 from django.contrib import admin
 
 
@@ -25,5 +26,8 @@ urlpatterns = [
     url(r'^api/newsfeeds$', newsfeed_views.newsfeed_list),
     url(r'^api/(?P<version>\w+)/newsfeeds$', newsfeed_views.newsfeed_list),
     url(r'^api/newsfeeds/(?P<pk>[0-9]+)/report_as_spam$', newsfeed_views.newsfeed_report),
+    url(r'^api/newsfeeds/v2/(?P<pk>[0-9]+)/report_as_spam$', newsfeed_views.newsfeed_report),
+    url(r'^api/v2/states$', location_views.state_list),
+    url(r'^api/v2/states/(?P<state>\w+)/townships$', location_views.township_list_of_state),
     url(r'^admin/', include(admin.site.urls)),
 ]

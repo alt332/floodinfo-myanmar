@@ -17,6 +17,8 @@ class Newsfeed(models.Model):
     dam_condition = models.IntegerField(default=0, choices=condition_choices)
     river_condition = models.IntegerField(default=0, choices=condition_choices)
     posted_time = models.DateTimeField(default=timezone.now, blank=True)
+    state = models.CharField(max_length=255, blank=True, null=True)
+    township = models.CharField(max_length=255, blank=True, null=True)
 
 
     def __unicode__(self):
