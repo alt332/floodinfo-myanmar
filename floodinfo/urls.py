@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^api/v2/newsfeeds/(?P<pk>[0-9]+)/report_as_spam$', newsfeed_views.newsfeed_report),
     url(r'^api/v2/newsfeeds/townships/(?P<township>\w+)$', newsfeed_views.filter_by_township),
     url(r'^api/v2/newsfeeds/states/(?P<state>\w+)$', newsfeed_views.filter_by_state),
-    url(r'^api/v2/newsfeeds/search/(?P<query>\w+)$', newsfeed_views.search),
+    url(r'^api/v2/newsfeeds/search$', newsfeed_views.search),
 
     url(r'^api/v2/states$', location_views.state_list),
     url(r'^api/v2/states/(?P<state>\w+)/townships$', location_views.township_list_of_state),

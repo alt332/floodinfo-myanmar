@@ -89,6 +89,7 @@ def filter_by_township(request, township):
     serializer = NewsfeedSerializer(newsfeeds, many=True)
 
     if newsfeeds:
+        township = Location.objects.filter(township__icontains=township).values
         return JSONResponse({
             'meta': {
                 'total_count': paginator.count,
@@ -131,8 +132,10 @@ def filter_by_state(request, state):
         return HttpResponse(status=204)
 
 @csrf_exempt
-def search(request, query):
-    newsfeeds = Newsfeed.objects.filter(Q(state__icontains=query) | Q(township__icontains=query) | Q(title__contains=query) | Q(description__icontains=query)).exclude(show_hide=True).order_by('-id')
+def search(request):
+    keyword = request.GET.get('keyword')
+
+    newsfeeds = Newsfeed.objects.filter(Q(state__icontains=keyword) | Q(township__icontains=keyword) | Q(title__contains=keyword) | Q(description__icontains=keyword)).exclude(show_hide=True).order_by('-id')
 
     paginator = Paginator(newsfeeds, 10)
     if request.GET.get('page'):
