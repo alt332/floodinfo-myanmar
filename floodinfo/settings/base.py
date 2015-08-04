@@ -18,7 +18,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'csvimport.app.CSVImportConf',
     'corsheaders',
     'donation_groups',
     'newsfeed',
