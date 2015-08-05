@@ -6,7 +6,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'v6s=$i3tycp1x*hyz(ck)b798vk=qgp+02tax63rq*nkds8_5n'
 
-DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     'bootstrap3',
@@ -56,15 +61,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'floodinfo.wsgi.application'
 
-# Database
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost:5432/floodinfo')
+    'default': dj_database_url.config()
 }
-
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
