@@ -1,5 +1,5 @@
-from django.utils import timezone
 from django.db import models
+from newsfeed.converter import is_zawgyi, zg12uni51
 
 
 class DonationGroup(models.Model):
@@ -13,3 +13,12 @@ class DonationGroup(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if is_zawgyi(self.title):
+            self.title = zg12uni51(self.title)
+        if is_zawgyi(self.description):
+            self.description = zg12uni51(self.description)
+        if is_zawgyi(self.donation_location):
+            self.donation_location = zg12uni51(self.donation_location)
+        super(DonationGroup, self).save(*args, **kwargs)
