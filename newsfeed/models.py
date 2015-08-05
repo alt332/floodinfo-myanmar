@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.utils import timezone
 from django.db import models
+from converter import is_zawgyi, zg12uni51
 
 
 class Newsfeed(models.Model):
@@ -20,6 +22,17 @@ class Newsfeed(models.Model):
     state = models.CharField(max_length=255, blank=True, null=True)
     township = models.CharField(max_length=255, blank=True, null=True)
 
-
     def __unicode__(self):
         return self.title
+
+    def contains_zawgyi(self):
+        return is_zawgyi("မံုရြာျမိဳ႕")
+
+        #  return is_zawgyi(self.description) and is_zawgyi(self.title)
+
+    def save(self, *args, **kwargs):
+        if is_zawgyi(self.title):
+            self.title = zg12uni51(self.title)
+        if is_zawgyi(self.description):
+            self.description = zg12uni51(self.description)
+        super(Newsfeed, self).save(*args, **kwargs)
