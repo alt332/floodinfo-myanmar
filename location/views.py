@@ -31,6 +31,7 @@ def township_list_of_state(request, state):
         'township',
         'latitude',
         'longitude',
+        'status',
         'state',
         'description',
         'total_male',
